@@ -1,0 +1,16 @@
+Basic authentication with apache2
+
+Create file /etc/apache2/.htpasswd (-c) and add users to the AuthUserFile:
+sudo htpasswd /etc/apache2/.htpasswd -c exampleAccount
+
+Add directory block to apache configuration file /etc/apache2/sites-available/default-ssl.conf:
+                 <Directory "/var/www/html/examplePath">
+                        AuthType Basic
+                        AuthName "Restricted Content"
+                        AuthUserFile /etc/apache2/.htpasswd
+                        Require valid-user
+                </Directory>
+note: User the default ssl conf file as we use https for all paths (http is redirected to https)
+
+mkdir examplePath in /var/www/html. When pasting zip/picture/whatever in there, make sure the access rights are correct.
+
